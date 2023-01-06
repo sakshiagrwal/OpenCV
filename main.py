@@ -31,17 +31,20 @@ for filename in os.listdir(photos_dir):
             os.makedirs(name)
             face_images[name] = []
 
-        # Add the face image to the person's list of face images
-        face_images[name].append(photo)
+        # Add the file path of the photo to the person's list of face images
+        face_images[name].append(os.path.join(photos_dir, filename))
 
 # Move the photos to the appropriate folders
 for name in face_images:
-    for photo in face_images[name]:
+    for photo_path in face_images[name]:
+        # Get the filename of the photo
+        filename = os.path.basename(photo_path)
+
         # Create the destination file path
         dest_path = os.path.join(name, filename)
 
         # Move the photo to the destination folder
-        os.rename(os.path.join(photos_dir, filename), dest_path)
+        os.rename(photo_path, dest_path)
 
 # Print the number of face images for each person
 for name in face_images:
